@@ -1,0 +1,74 @@
+{%extends 'testapp/base.html'%}
+
+{%block title%}Kpy Blog{%endblock%}
+
+{%block contain%}
+
+<h1>Welcome to kpy's blog</h1><br><br>
+
+{%if tag%}
+
+<h2>Your related tag:{{tag.name}} result below</h2>
+
+{%for data in post_data%}
+
+<h2><a href="/{{data.id}}/{{data.slug}}">{{data.title}}</a> </h2>
+
+<p>Published on {{data.publish}} By {{data.author}}</p>
+
+{{data.body|truncatewords:30|linebreaks}}
+
+{%endfor%}
+
+{%include 'testapp/paginator.html' with page=post_data%}
+
+{%else%}
+
+
+{%for data in post_data%}
+
+<h2><a href="/{{data.id}}/{{data.slug}}">{{data.title}}</a> </h2>
+
+<p>Published on {{data.publish}} By {{data.author}}</p>
+
+<p>Tags:{% for each in data.tags.all%} <a href="{%url 'second' each.name%}"><div class="btn btn-lg btn-success">
+
+{{each.name}}</div></a>{%endfor%}</p>
+
+
+
+{{data.body|truncatewords:30|linebreaks}}
+
+{%endfor%}
+
+{%include 'testapp/paginator.html' with page=post_data%}
+
+{%endif%}
+
+
+
+
+
+{%endblock%}
+
+{%block sidebar%}
+
+<h1>Related post</h1><hr>
+
+<p>Total post are : </p>
+<h2>Latest post are</h2>
+{%for each in latest%}
+<ul>
+  <li><a href="/{{each.id}}/{{each.slug}}"">{{each.title}}</a></li>
+</ul>
+{%endfor%}
+
+<h2>Most commented post are:</h2>
+{%for each in most%}
+<ul>
+  <li><a href="/{{each.id}}/{{each.slug}}"">{{each.title}}</a></li>
+</ul>
+{%endfor%}
+
+
+{%endblock%}

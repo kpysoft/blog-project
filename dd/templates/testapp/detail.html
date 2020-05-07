@@ -1,0 +1,53 @@
+{%extends 'testapp/base.html'%}
+
+{%block contain%}
+
+
+
+    <h1>{{p_post.title}}</h1><br>
+    <p>Published on {{p_post.publish}} By {{p_post.author}}</p>
+    <p>{{p_post.body}}</p>
+
+    <a href="{%url 'email' p_post.id%}" class="btn btn-lg btn-success">Share this post by email</a><br><br>
+
+{%with comments.count as comments_count%}
+Total:{{comments_count}} comment{{comments_count|pluralize}}
+
+{%endwith%}<br><br>
+
+{%if comments%}
+
+    {%for comment in comments%}
+    Comment {{forloop.counter}} is made by {{comment.name}} on {{comment.created}}<br>
+    <p>{{comment.body}}</p>
+    {%endfor%}
+  {%else%}
+
+  <p>No comment yet</p>
+
+  {%endif%}
+
+  {%if csubmit%}
+
+  <h1>Thanks for commeting</h1>
+
+
+  {%else%}
+
+
+    <form method="post">
+
+      {{form.as_p}}
+      {%csrf_token%}
+
+      <input type="submit" class="btn btn-lg btn-success" value="Post Comment">
+
+    </form>
+
+
+
+{%endif%}
+
+
+
+{%endblock%}

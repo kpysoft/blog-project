@@ -1,0 +1,14 @@
+.contain{
+
+  width: 60%;
+  float: left;
+  background: yellow;
+
+}
+
+.sidebar{
+
+  width: 40%;
+  float: right;
+  background: pink;
+}
